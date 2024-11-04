@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rule 30</title>
+    <style>
+        body { margin: 0; overflow: hidden; background-color: black; }
+        canvas { display: block; }
+        #rulePreview {
+            display: flex;
+            justify-content: center;
+            padding: 10px;
+            background-color: #222;
+        }
+        .rule-box {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 0 5px;
+            color: white;
+            font-family: Arial, sans-serif;
+            font-size: 10px;
+        }
+        .rule-box .cells {
+            display: flex;
+            justify-content: center;
+            gap: 2px;
+        }
+        .rule-box .cell, .rule-box .result {
+            width: 10px;
+            height: 10px;
+            background-color: white;
+        }
+        .rule-box .cell.off, .rule-box .result.off {
+            background-color: black;
+        }
+    </style>
+    <script src="js/three.min.js"></script>
+    <script src="js/OrbitControls.js"></script>
+    <script src="js/dat.gui.min.js"></script>
+</head>
+<body>
+    <div id="rulePreview"></div>
+    <script src="js/Rule30.js"></script>
+</body>
+</html>
