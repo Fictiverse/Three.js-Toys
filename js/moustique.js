@@ -1,18 +1,45 @@
 // Initialisation de la scène, de la caméra et du renderer
 const scene = new THREE.Scene();
-const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+const camera = new THREE.PerspectiveCamera(35, window.innerWidth / window.innerHeight, 0.1, 1000);
 const renderer = new THREE.WebGLRenderer();
 renderer.setSize(window.innerWidth, window.innerHeight);
 document.body.appendChild(renderer.domElement);
 
 // Importation des OrbitControls
 const controls = new THREE.OrbitControls(camera, renderer.domElement);
-camera.position.z = 10;
+camera.position.z = 50;
 controls.update();
 
-// Ajout d'une grille pour mieux visualiser la profondeur
-const gridHelper = new THREE.GridHelper(10, 10);
-scene.add(gridHelper);
+
+// Fonction pour créer un cube de grilles
+function createGridCube(size, divisions, color1, color2) {
+    const group = new THREE.Group(); // Grouper toutes les grilles pour un contrôle global
+    const halfSize = size / 2;
+
+    // Tableau pour les translations et rotations des faces
+    const faceConfigs = [
+        { position: [0, halfSize, 0], rotation: [0, 0, 0] },           // Face supérieure (XY)
+        { position: [0, -halfSize, 0], rotation: [0, 0, 0] },          // Face inférieure (XY inversée)
+        { position: [0, 0, halfSize], rotation: [Math.PI / 2, 0, 0] }, // Face avant (XZ)
+        { position: [0, 0, -halfSize], rotation: [-Math.PI / 2, 0, 0] }, // Face arrière (XZ inversée)
+        { position: [halfSize, 0, 0], rotation: [0, 0, -Math.PI / 2] }, // Face droite (YZ)
+        { position: [-halfSize, 0, 0], rotation: [0, 0, Math.PI / 2] }  // Face gauche (YZ inversée)
+    ];
+
+    // Créer et ajouter chaque face
+    faceConfigs.forEach(config => {
+        const grid = new THREE.GridHelper(size, divisions, color1, color2);
+        grid.position.set(...config.position);
+        grid.rotation.set(...config.rotation);
+        group.add(grid);
+    });
+
+    return group;
+}
+
+// Créer un cube de grilles avec une taille de 100x100, 100 divisions, et des couleurs personnalisées
+const gridCube = createGridCube(100, 100, 0x202020, 0x030303);
+scene.add(gridCube);
 
 // Liste des presets
 const presets = {
@@ -26,11 +53,11 @@ const presets = {
     },
     preset2: {
         approachSpeed: 0.01,
-        repelDistance: 5.9,
-        repelForce: 0.1,
+        repelDistance: 6.4,
+        repelForce: 0.4,
         randomFactor: 0.0,
-        redParticles: 549,
-        blueParticles: 1000,
+        redParticles: 469,
+        blueParticles: 761,
     },
     preset3: {
         approachSpeed: 0.2,
@@ -55,6 +82,38 @@ const presets = {
         randomFactor: 0.0,
         redParticles: 4,
         blueParticles: 1000,
+    },
+    preset6: {
+        approachSpeed: 0.08,
+        repelDistance: 5.0,
+        repelForce: 0.2,
+        randomFactor: 0.0,
+        redParticles: 188,
+        blueParticles: 199,
+    },
+    preset7: {
+        approachSpeed: 0.08,
+        repelDistance: 16.0,
+        repelForce: 0.2,
+        randomFactor: 0.0,
+        redParticles: 372,
+        blueParticles: 209,
+    },
+    preset8: {
+        approachSpeed: 0.1,
+        repelDistance: 8.7,
+        repelForce: 0.1,
+        randomFactor: 0.0,
+        redParticles: 80,
+        blueParticles: 90,
+    },
+    preset9: {
+        approachSpeed: 0.1,
+        repelDistance: 16,
+        repelForce: 0.1,
+        randomFactor: 0.0,
+        redParticles: 80,
+        blueParticles: 60,
     },
 };
 
